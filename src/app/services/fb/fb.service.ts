@@ -37,6 +37,7 @@ export class FbService {
     return from(signInWithEmailAndPassword(this.auth, email, pass));
   }
 
+
   signup(email: string, pass: string) {
     return from(createUserWithEmailAndPassword(this.auth, email, pass));
   }
@@ -45,14 +46,16 @@ export class FbService {
     return from(signOut(this.auth));
   }
 
-  getCities(): Observable<City[]> {
-    return user(this.auth).pipe(
-      filter(isUser),
-      map(x => (x as User).uid),
-      switchMap((uid: string) => collectionData(collection(this.firestore, uid))),
-      tap(x => console.log(x))
-    );
-  }
+ getCities(): Observable<City[]> {
+  return user(this.auth).pipe(
+    filter(isUser),
+    map(x => (x as User).uid),
+    switchMap((uid: string) =>
+      collectionData(collection(this.firestore, uid)) as Observable<City[]>
+    ),
+    tap(x => console.log(x))
+  );
+}
 
   addCity(name: string) {
     return user(this.auth).pipe(

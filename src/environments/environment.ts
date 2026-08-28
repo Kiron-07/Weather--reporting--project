@@ -1,24 +1,14 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
-  appID: '',
-  config: {
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-  },
-};
 
-/*
- * In development mode, to ignore zone related error stack frames such as
- * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
- * import the following file, but please comment it out in production mode
- * because it will have performance impact when throw error
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+  appID: '56ea5e98914181f87079a636285e6856',
+
+  config: {
+    apiKey: 'AIzaSyCUgj6LwYsy0peFuBr0qdr3qmFKyeDXXss',
+    authDomain: 'minimus-weather-5571f.firebaseapp.com',
+    projectId: 'minimus-weather-5571f',
+    storageBucket: 'minimus-weather-5571f.firebasestorage.app',
+    messagingSenderId: '8093777922939',
+    appId: '1:8093777922939:web:d998c96154efda4b7587de'
+  }
+};

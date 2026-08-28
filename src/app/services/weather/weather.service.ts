@@ -14,7 +14,9 @@ interface Wind {
 }
 
 export interface Weather {
-  weather: { main: string }[];
+  weather: {
+    main: string;
+  }[];
   main: MainWeather;
   wind: Wind;
 }
@@ -22,7 +24,9 @@ export interface Weather {
 export interface Forecast {
   dt_txt: string;
   main: MainWeather;
-  weather: { main: string }[];
+  weather: {
+    main: string;
+  }[];
 }
 
 export interface ForecastResult {
@@ -33,19 +37,44 @@ export interface ForecastResult {
   providedIn: 'root',
 })
 export class WeatherService {
-  http = inject(HttpClient);
 
-  private readonly baseURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  private readonly forcastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=';
-  private readonly appID = environment.appID;
+  private http = inject(HttpClient);
 
-  getWeather(city: string, metric: 'metric' | 'imperial' = 'metric'): Observable<Weather> {
-    return this.http.get<Weather>(`${this.baseURL}${city}&units=${metric}&APPID=${this.appID}`);
+  private readonly baseURL =
+    'https://api.openweathermap.org/data/2.5/weather?q=';
+
+  private readonly forecastURL =
+    'https://api.openweathermap.org/data/2.5/forecast?q=';
+
+  private readonly appID =
+    environment.appID;
+
+
+  getWeather(
+    city: string,
+    metric: 'metric' | 'imperial' = 'metric'
+  ): Observable<Weather> {
+
+    return this.http.get<Weather>(
+      `${this.baseURL}${encodeURIComponent(city)}&units=${metric}&appid=${this.appID}`
+    );
+
   }
 
-  getForecast(city: string, metric: 'metric' | 'imperial' = 'metric'): Observable<Forecast[]> {
+
+  getForecast(
+    city: string,
+    metric: 'metric' | 'imperial' = 'metric'
+  ): Observable<Forecast[]> {
+
     return this.http
-      .get<ForecastResult>(`${this.forcastURL}${city}&units=${metric}&APPID=${this.appID}`)
-      .pipe(map(weather => weather.list));
+      .get<ForecastResult>(
+        `${this.forecastURL}${encodeURIComponent(city)}&units=${metric}&appid=${this.appID}`
+      )
+      .pipe(
+        map(weather => weather.list)
+      );
+
   }
+
 }
